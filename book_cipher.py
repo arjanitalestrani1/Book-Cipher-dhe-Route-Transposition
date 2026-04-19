@@ -32,4 +32,20 @@ def book_cipher_encrypt(message, book_text):
 
     return " ".join(encrypted)
 
+def book_cipher_decrypt(cipher_text, book_text):
+    words = clean_text(book_text)
+    numbers = cipher_text.split()
 
+    decrypted_words = []
+
+    for n in numbers:
+        if n.isdigit():
+            index = int(n) - 1  # because positions start at 1
+            if 0 <= index < len(words):
+                decrypted_words.append(words[index])
+            else:
+                decrypted_words.append("?")
+        else:
+            decrypted_words.append("?")
+
+    return " ".join(decrypted_words)
