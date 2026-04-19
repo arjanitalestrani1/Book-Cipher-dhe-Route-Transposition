@@ -10,37 +10,130 @@ from ciphers.book_cipher import (
     book_cipher_decrypt
 )
 
-print("Choose option:")
-print("1. Column Route Encrypt")
-print("2. Column Route Decrypt")
-print("3. ZigZag Route Encrypt")
-print("4. ZigZag Route Decrypt")
-print("5. Book Cipher Encrypt")
-print("6. Book Cipher Decrypt")
+def get_int(prompt):
+    while True:
+        try:
+            return int(input(prompt))
+        except ValueError:
+            print("Invalid input! Please enter a number.")
 
-choice = input("Enter choice: ")
-text = input("Enter text: ")
 
-if choice in ["1", "2", "3", "4"]:
-    cols = int(input("Enter columns: "))
+def get_text(prompt):
+    while True:
+        text = input(prompt)
+        if text.strip() == "":
+            print("Input cannot be empty!")
+        else:
+            return text
 
-if choice in ["5", "6"]:
-    book_text = input("Enter book text: ")
 
-if choice == "1":
-    print("Encrypted:", encrypt_column_route(text, cols))
+def safe_decrypt(func, text, *args):
+    try:
+        return func(text, *args)
+    except Exception:
+        return "Invalid input! Please enter valid encrypted text."
 
-elif choice == "2":
-    print("Decrypted:", decrypt_column_route(text, cols))
 
-elif choice == "3":
-    print("Encrypted:", encrypt_zigzag_route(text, cols))
 
-elif choice == "4":
-    print("Decrypted:", decrypt_zigzag_route(text, cols))
+while True:
+    print("\n==============================")
+    print("        MAIN MENU")
+    print("==============================")
+    print("1. Book Cipher")
+    print("2. Route Cipher")
+    print("3. Exit")
 
-elif choice == "5":
-    print("Encrypted:", book_cipher_encrypt(text, book_text))
+    choice = input("Enter option: ")
 
-elif choice == "6":
-    print("Decrypted:", book_cipher_decrypt(text, book_text))
+    if choice not in ["1", "2", "3"]:
+        print("Invalid choice!")
+        continue
+
+    if choice == "3":
+        print("Goodbye!")
+        break
+
+    # ================= BOOK =================
+    elif choice == "1":
+
+        print("\n==============================")
+        print("        BOOK CIPHER")
+        print("==============================")
+        print("1. Encrypt")
+        print("2. Decrypt")
+        print("3. Back")
+
+        action = input("Enter option: ")
+
+        if action not in ["1", "2", "3"]:
+            print("Invalid choice!")
+            continue
+
+        if action == "3":
+            continue
+
+        text = get_text("Enter text: ")
+        book_text = get_text("Enter book text: ")
+
+        if action == "1":
+            print("\nResult:", book_cipher_encrypt(text, book_text))
+
+        elif action == "2":
+            print("\nResult:", safe_decrypt(book_cipher_decrypt, text, book_text))
+
+
+    # ================= ROUTE =================
+    elif choice == "2":
+
+        print("\n==============================")
+        print("        ROUTE CIPHER")
+        print("==============================")
+        print("1. Column")
+        print("2. ZigZag")
+        print("3. Back")
+
+        route = input("Enter option: ")
+
+        if route not in ["1", "2", "3"]:
+            print("Invalid choice!")
+            continue
+
+        if route == "3":
+            continue
+
+       
+        if route == "1":
+            title = "Column Route Cipher"
+        else:
+            title = "ZigZag Route Cipher"
+
+        print("\n==============================")
+        print(f"   {title}")
+        print("==============================")
+        print("1. Encrypt")
+        print("2. Decrypt")
+        print("3. Back")
+
+        action = input("Enter option: ")
+
+        if action not in ["1", "2", "3"]:
+           print("Invalid choice!")
+           continue
+
+        if action == "3":
+           continue
+
+        text = get_text("Enter text: ")
+        cols = get_int("Enter columns: ")
+
+        if route == "1" and action == "1":
+            print("\nResult:", encrypt_column_route(text, cols))
+
+        elif route == "1" and action == "2":
+            print("\nResult:", safe_decrypt(decrypt_column_route, text, cols))
+
+        elif route == "2" and action == "1":
+            print("\nResult:", encrypt_zigzag_route(text, cols))
+
+        elif route == "2" and action == "2":
+            print("\nResult:", safe_decrypt(decrypt_zigzag_route, text, cols))
