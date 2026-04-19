@@ -44,6 +44,7 @@ def decrypt_column_route(cipher, cols):
 
     return result.strip('X')
 
+
 # ========================================
 #    ZIG-ZAG ROUTE TRANSPOSITION CIPHER
 # ========================================
@@ -73,3 +74,26 @@ def encrypt_zigzag_route(text, cols):
                 result += grid[i][j]
 
     return result
+
+
+def decrypt_zigzag_route(cipher, cols):
+    rows = math.ceil(len(cipher) / cols)
+    grid = [['' for _ in range(cols)] for _ in range(rows)]
+
+    k = 0
+    for i in range(rows):
+        if i % 2 == 0:
+            for j in range(cols):
+                grid[i][j] = cipher[k]
+                k += 1
+        else:
+            for j in reversed(range(cols)):
+                grid[i][j] = cipher[k]
+                k += 1
+
+    result = ""
+    for i in range(rows):
+        for j in range(cols):
+            result += grid[i][j]
+
+    return result.strip('X')
