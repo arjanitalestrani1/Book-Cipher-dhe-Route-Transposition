@@ -319,3 +319,10 @@ This prevents temporary and system files from being uploaded to the repository.
 - All encryption removes spaces and converts text to uppercase  
 - Padding is done using the character `X` when necessary  
 - The same parameters (columns or book text) must be used for correct decryption  
+
+## Contributors
+
+- Arjanita Lestrani
+- Eliona Muja  
+- Elira Bytyqi  
+- Elita Jashari
